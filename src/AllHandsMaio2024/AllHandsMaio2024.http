@@ -12,18 +12,18 @@ POST {{AllHandsMaio2024_HostAddress}}/products
 Content-Type: application/json
 
 { 
-  "Name": "iPhone 17", 
+  "Name": "iPhone 18", 
   "Price": 20999.00,
-  "BrandId": 1
+  "BrandId": null
 }
 
 ###
 
-GET {{AllHandsMaio2024_HostAddress}}/products/7?includeBrand=false
+GET {{AllHandsMaio2024_HostAddress}}/products/9?includeBrand=false
 
 ###
 
-PUT {{AllHandsMaio2024_HostAddress}}/products/7
+PUT {{AllHandsMaio2024_HostAddress}}/products/8
 Content-Type: application/json
 
 {

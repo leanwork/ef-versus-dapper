@@ -30,7 +30,7 @@ public class DapperProductRepository : IProductRepository
             return context.Query<Product, Brand, Product>(
                 sql: $"SELECT P.Id, P.Name, P.Price, B.Id, B.Name " +
                      $"FROM Products P " +
-                     $"INNER JOIN Brands B ON B.Id = P.BrandId " +
+                     $"LEFT JOIN Brands B ON B.Id = P.BrandId " +
                      $"WHERE P.Id = @ProductId",
                 param: new { ProductId = id },
                 map: (product, brand) =>
@@ -51,8 +51,13 @@ public class DapperProductRepository : IProductRepository
         using var context = dapperContext.GetConnection();
 
         newProduct.Id = context.ExecuteScalar<int>(
-            sql: "INSERT INTO Products (Name, Price) OUTPUT INSERTED.Id VALUES (@Name, @Price)",
-            param: new { Name = newProduct.Name, Price = newProduct.Price });
+            sql: "INSERT INTO Products (Name, Price, BrandId) OUTPUT INSERTED.Id VALUES (@Name, @Price, @BrandId)",
+            param: new 
+            { 
+                Name = newProduct.Name, 
+                Price = newProduct.Price,
+                BrandId = newProduct.BrandId
+            });
 
         return newProduct;
     }
